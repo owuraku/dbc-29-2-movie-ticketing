@@ -10,6 +10,11 @@
 <body style="background-color: beige">
     @include('layout.navbar')
     <main class="container mt-4">
+        @if (session('status'))
+        <div class="alert alert-{{session('status')}}">
+            {{ session('message') }}
+        </div>
+        @endif
         @yield('content')
     </main>
 </body>

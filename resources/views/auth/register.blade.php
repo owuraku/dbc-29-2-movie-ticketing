@@ -2,47 +2,31 @@
 @section('title', 'Register with Us')
 
 @section('content')
-<form class="row g-3">
-    <div class="col-md-4">
-      <label for="validationDefault01" class="form-label">First name</label>
-      <input type="text" class="form-control" id="validationDefault01" value="Mark" required>
-    </div>
-    <div class="col-md-4">
-      <label for="validationDefault02" class="form-label">Last name</label>
-      <input type="text" class="form-control" id="validationDefault02" value="Otto" required>
-    </div>
-    <div class="col-md-4">
-      <label for="validationDefaultUsername" class="form-label">Username</label>
-      <div class="input-group">
-        <span class="input-group-text" id="inputGroupPrepend2">@</span>
-        <input type="text" class="form-control" id="validationDefaultUsername" aria-describedby="inputGroupPrepend2" required>
-      </div>
-    </div>
-    <div class="col-md-6">
-      <label for="validationDefault03" class="form-label">City</label>
-      <input type="text" class="form-control" id="validationDefault03" required>
-    </div>
-    <div class="col-md-3">
-      <label for="validationDefault04" class="form-label">State</label>
-      <select class="form-select" id="validationDefault04" required>
-        <option selected disabled value="">Choose...</option>
-        <option>...</option>
-      </select>
-    </div>
-    <div class="col-md-3">
-      <label for="validationDefault05" class="form-label">Zip</label>
-      <input type="text" class="form-control" id="validationDefault05" required>
+<form class="row g-3" action="{{route('auth.register')}}" method="POST">
+    @csrf
+    <div class="col-12">
+      <label for="fullname" class="form-label">Fullname</label>
+      <input type="text" class="@error('fullname') is-invalid @enderror form-control" value="{{old('fullname')}}"  name="fullname" placeholder="Enter your fullname" required>
+      @error('fullname')
+          <div class="invalid-feedback">
+            {{$message}}
+          </div>
+      @enderror
     </div>
     <div class="col-12">
-      <div class="form-check">
-        <input class="form-check-input" type="checkbox" value="" id="invalidCheck2" required>
-        <label class="form-check-label" for="invalidCheck2">
-          Agree to terms and conditions
-        </label>
-      </div>
+      <label for="email" class="form-label">Email</label>
+      <input type="email" class="form-control" name="email"  required>
+    </div>
+    <div class="col-md-12">
+      <label for="password" class="form-label">Password</label>
+        <input type="password" class="form-control" name="password" required>
+    </div>
+    <div class="col-md-12">
+      <label for="password" class="form-label">Confirm Password</label>
+        <input type="password" class="form-control" name="password_confirmation" required>
     </div>
     <div class="col-12">
-      <button class="btn btn-primary" type="submit">Submit form</button>
+      <button class="btn btn-primary" type="submit">Register</button>
     </div>
   </form>
 @endsection

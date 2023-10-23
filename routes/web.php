@@ -19,7 +19,13 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('login', [AuthController::class, 'getLoginForm'])->name('auth.login');
-Route::get('register',[AuthController::class, 'getRegisterForm'])->name('auth.register');
+Route::get('login', [AuthController::class, 'getLoginForm'])->name('auth.login.form');
+
+Route::post('login', [AuthController::class, 'loginUser'])->name('auth.login');
+Route::post('logout', [AuthController::class, 'logoutUser'])->name('auth.logout');
+
+
+Route::get('register',[AuthController::class, 'getRegisterForm'])->name('auth.register.form');
+Route::post('register',[AuthController::class, 'registerUser'])->name('auth.register');
 
 Route::resource('/showings', ShowingController::class );

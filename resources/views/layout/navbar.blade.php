@@ -13,13 +13,31 @@
       </div>
     </div>
     <div>
+     
         <ul class="navbar-nav">
+          @auth
+          {{--  --}}
+          <li class="nav-item">
+            <a href="#">Welcome, {{ Auth::user()->name}}</a>
+          </li>
+          {{--  --}}
+          <li class="nav-item">
+            <form action="{{route('auth.logout')}}" method="POST">
+              @csrf
+              <button class="btn btn-danger" type="submit" >Logout</a>
+            </form>
+          </li>
+          @endauth
+
+          @guest
             <li class="nav-item">
-              <a class="nav-link active" aria-current="page" href="{{route('auth.register')}}">Register</a>
+              <a class="nav-link active" aria-current="page" href="{{route('auth.register.form')}}">Register</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="{{route('auth.login')}}">Login</a>
+              <a class="nav-link" href="{{route('auth.login.form')}}">Login</a>
             </li>
+            @endguest
           </ul>
+          
     </div>
   </nav>
