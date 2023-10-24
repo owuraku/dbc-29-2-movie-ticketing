@@ -17,6 +17,10 @@ class Showing extends Model
         return $this->belongsTo(Movie::class);
     }
 
+    public function tickets(){
+        return $this->hasMany(Ticket::class);
+    }
+
     public function formattedDate() {
         return  Carbon::parse($this->showing_datetime)->toFormattedDayDateString();
     }
@@ -31,5 +35,17 @@ class Showing extends Model
 
     public function otherShowings() {
         return $this->movie->activeShowings->where('id', '<>', $this->id);
+    }
+
+    public function ticketsPurchased() {
+        return $this->tickets()->count();
+    }
+
+    public function ticketsAvailable() {
+        return $this->limit - $this->ticketsPurchased();
+    }
+
+    public function isSoldOut() {
+        return $this->limit == $this->ticketsPurchased();
     }
 }
