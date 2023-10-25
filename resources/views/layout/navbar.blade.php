@@ -9,6 +9,9 @@
           <li class="nav-item">
             <a class="nav-link active" aria-current="page" href="{{route('showings.index')}}">Home</a>
           </li>
+          <li class="nav-item">
+            <a class="nav-link active" aria-current="page" href="{{route('movies.index')}}">Movies</a>
+          </li>
         </ul>
       </div>
     </div>

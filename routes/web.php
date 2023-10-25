@@ -4,6 +4,8 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ShowingController;
 use App\Http\Controllers\TicketController;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\MovieController;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -30,6 +32,8 @@ Route::get('register',[AuthController::class, 'getRegisterForm'])->name('auth.re
 Route::post('register',[AuthController::class, 'registerUser'])->name('auth.register');
 
 Route::resource('/showings', ShowingController::class );
+Route::resource('/movies', MovieController::class );
+
 Route::post('showings/{showing}/buy', [ShowingController::class, 'buyTicket'])->name('tickets.buy');
 Route::resource('/tickets', TicketController::class );
 
