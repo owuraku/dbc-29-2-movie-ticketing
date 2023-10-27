@@ -30,12 +30,41 @@ class MovieController extends Controller
      */
     public function store(Request $request)
     {
-        $request->validate([
+        // 1st argument = rules
+        // 2nd argument = custom messages
+        // 3rd argument = attribute name
+        $data = $request->validate([
             "title"=> ["required","min:5"],
             "description" => ["required","min:10"],
             "genre" => ["required","min:10"],
             "poster" => ["required","image", "max:1024"],
-        ]);
+        ]
+        // ,[
+        //     "poster.required"=> "You need to select a movie poster",
+        //     "poster.required"=> "You need to select a movie poster"
+        // ],[
+        //    "m_title" => "Movie Title" ]
+        );
+
+        $posterImage = $request->file("poster");
+        try {
+            $path = $posterImage->store("movies", "images");
+            $movie = new Movie();
+            $movie->title = $data['title'];
+            $movie->description = $data['description'];
+            $movie->poster = $path;
+            $movie->genre = $data['genre'];
+            $movie->save();
+            return redirect()->route('movies.index')->with([
+                "message"=> "$movie->title created successfully",
+                "status" => "success"
+            ]);
+        } catch (\Exception $e) {
+            return redirect()->back()->withInput()->with([
+                "message"=> "Unable to create movie.",
+                "status" => "danger"
+            ]);
+        }
         //
     }
 
