@@ -23,7 +23,7 @@ class AuthController extends Controller
 
         if (Auth::attempt($credentials)) {
             $request->session()->regenerate();
-            return redirect(route('showings.index'));
+            return redirect()->back();
         } else {
             return redirect()->back()->withInput()->with(['status'=> 'danger', 'message' => 'Email/password is incorrect']);
         }

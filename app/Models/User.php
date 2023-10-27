@@ -51,4 +51,8 @@ class User extends Authenticatable
     public function contact() {
         return $this->hasOne(Contact::class);
     }
+
+    public function isAdmin () {
+        return $this->role == 'admin';
+    }
 }

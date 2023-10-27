@@ -7,7 +7,7 @@
     <p class="card-text">{{$showing->movie->description}}</p>
     
     @if($showButton)
-    <a href="{{route('showings.show', $showing->id)}}" class="btn btn-primary">Buy Ticket GHS {{$showing->price}}</a>
+    <a href="{{route('showings.view', $showing->id)}}" class="btn btn-primary">Buy Ticket GHS {{$showing->price}}</a>
     @endif
   </div>
 </div>

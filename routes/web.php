@@ -17,24 +17,29 @@ use App\Http\Controllers\MovieController;
 | be assigned to the "web" middleware group. Make something great!
 |
 */
+Route::redirect('/', 'home');
+Route::get('home', [ShowingController::class,'index'])->name('home');
 
-Route::get('/', function () {
-    return view('welcome');
+Route::get('login', [AuthController::class, 'getLoginForm'])->name('auth.login.form')->middleware('guest');
+
+Route::post('login', [AuthController::class, 'loginUser'])->name('auth.login')->middleware('guest');
+Route::post('logout', [AuthController::class, 'logoutUser'])->name('auth.logout')->middleware('auth');
+
+
+Route::get('register',[AuthController::class, 'getRegisterForm'])->name('auth.register.form')->middleware('guest');
+Route::post('register',[AuthController::class, 'registerUser'])->name('auth.register')->middleware('guest');
+
+
+Route::get('admin/login', [AuthController::class, 'getLoginForm'])->middleware('guest');  
+Route::prefix('/admin')->middleware(['auth','admin'])->group(function() {
+    Route::resource('showings', ShowingController::class );
+    Route::resource('movies', MovieController::class );
+    Route::resource('/tickets', TicketController::class );
 });
 
-Route::get('login', [AuthController::class, 'getLoginForm'])->name('auth.login.form');
-
-Route::post('login', [AuthController::class, 'loginUser'])->name('auth.login');
-Route::post('logout', [AuthController::class, 'logoutUser'])->name('auth.logout');
+Route::post('showings/{showing}/buy', [ShowingController::class, 'buyTicket'])->name('tickets.buy')->middleware('auth');
+Route::get('showings/{showing}', [ShowingController::class, 'show'])->name('showings.view');
 
 
-Route::get('register',[AuthController::class, 'getRegisterForm'])->name('auth.register.form');
-Route::post('register',[AuthController::class, 'registerUser'])->name('auth.register');
-
-Route::resource('/showings', ShowingController::class );
-Route::resource('/movies', MovieController::class );
-
-Route::post('showings/{showing}/buy', [ShowingController::class, 'buyTicket'])->name('tickets.buy');
-Route::resource('/tickets', TicketController::class );
 
 

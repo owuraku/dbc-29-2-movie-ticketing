@@ -28,7 +28,12 @@
                 <td>
                     <a class="btn btn-primary" href="{{route('movies.edit', $movie->id)}}">Edit</a>
                     <a class="btn btn-info" href="{{route('movies.show', $movie->id)}}">View</a>
-                    <a class="btn btn-danger" href="{{route('movies.destroy', $movie->id)}}">Delete</a>
+                    <form action="{{route('movies.destroy', $movie->id)}}" method="POST">
+                      @csrf 
+                      @method('DELETE')
+                      <button type="submit" class="btn btn-danger">
+                        Delete</button>
+                      </form>
                 </td>
               </tr>
             @empty

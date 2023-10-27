@@ -7,11 +7,24 @@
       <div class="collapse navbar-collapse" id="navbarNav">
         <ul class="navbar-nav">
           <li class="nav-item">
-            <a class="nav-link active" aria-current="page" href="{{route('showings.index')}}">Home</a>
+            <a class="nav-link active" aria-current="page" href="{{route('home')}}">Home</a>
           </li>
+          @auth
+          @if(Auth::user()->isAdmin())
           <li class="nav-item">
             <a class="nav-link active" aria-current="page" href="{{route('movies.index')}}">Movies</a>
           </li>
+          <li class="nav-item">
+            <a class="nav-link active" aria-current="page" href="{{route('showings.index')}}">Showings</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link active" aria-current="page" href="{{route('tickets.index')}}">Tickets</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link active" aria-current="page" href="#">User Management</a>
+          </li>
+          @endif
+          @endauth
         </ul>
       </div>
     </div>
