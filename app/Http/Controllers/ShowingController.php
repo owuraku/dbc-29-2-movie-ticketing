@@ -6,6 +6,9 @@ use Illuminate\Http\Request;
 use App\Models\Showing;
 use App\Models\Ticket;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\TicketSold;
+
 
 
 class ShowingController extends Controller
@@ -77,14 +80,13 @@ class ShowingController extends Controller
         $data = $request->validate([
             'number_of_tickets' => [ 'required', 'min:1', 'numeric', "max:$available"]
         ]);
+        $ticketsBought = [];
         for ($i = 0; $i < $data['number_of_tickets']; $i++){
-            $showing->tickets()->create(['user_id' => Auth::user()->id]);
-            // Ticket::create([
-            //     'showing_id' => $showing->id,
-            //     'user_id' => Auth::user()->id,
-            // ]);
+            $ticketsBought[] =  $showing->tickets()->create(['user_id' => Auth::user()->id]);
         }
 
+        // send notification to user
+        Mail::to(Auth::user()->email)->send(new TicketSold(Auth::user()->name, collect($ticketsBought)));
         
         // Auth::user()->tickets()->create(['showing_id' => $showing->id]);
 

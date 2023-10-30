@@ -17,6 +17,12 @@ use App\Http\Controllers\MovieController;
 | be assigned to the "web" middleware group. Make something great!
 |
 */
+// Route::get('/test', function () {
+//     $tickets = App\Models\Ticket::orderBy('purchased_at','desc')->limit(4)->get();
+//     // Illuminate\Support\Facades\Mail::to('test@test.com')->send(new App\Mail\TicketSold('Kwaku Mensah',$tickets));
+//     return new App\Mail\TicketSold('Test User',$tickets);
+// });
+
 Route::redirect('/', 'home');
 Route::get('home', [ShowingController::class,'index'])->name('home');
 
@@ -39,6 +45,8 @@ Route::prefix('/admin')->middleware(['auth','admin'])->group(function() {
 
 Route::post('showings/{showing}/buy', [ShowingController::class, 'buyTicket'])->name('tickets.buy')->middleware('auth');
 Route::get('showings/{showing}', [ShowingController::class, 'show'])->name('showings.view');
+
+Route::get('ticket-verify/{id}', [TicketController::class,'verify'])->name('verify.ticket');
 
 
 
