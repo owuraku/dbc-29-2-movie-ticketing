@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Database\Eloquent\Casts\Attribute;
 
 class Movie extends Model
 {
@@ -14,6 +15,8 @@ class Movie extends Model
     protected $fillable = [
         'title', 'description', 'genre', 'poster'
     ] ;
+
+    protected $appends = ['poster'];
 
     public function showings(){
         return $this->hasMany(Showing::class);
@@ -29,5 +32,11 @@ class Movie extends Model
         } else {
             return Storage::disk('images')->url($this->poster);
         }
+    }
+
+    protected function poster(): Attribute {
+        return Attribute::make(
+            get: fn ($path, array $attributes) => Str::contains($attributes['poster'], "https") ? $attributes['poster'] : Storage::disk('images')->url($attributes['poster']) ,
+        );
     }
 }

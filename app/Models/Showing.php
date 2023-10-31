@@ -13,6 +13,8 @@ class Showing extends Model
 
     public $timestamps = false;
 
+    protected $with = ['movie', 'tickets'];
+
     public function movie(){
         return $this->belongsTo(Movie::class);
     }

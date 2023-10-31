@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 
 class AuthController extends Controller
 {
@@ -27,6 +28,27 @@ class AuthController extends Controller
         } else {
             return redirect()->back()->withInput()->with(['status'=> 'danger', 'message' => 'Email/password is incorrect']);
         }
+    }
+
+
+    public function apiLogin(Request $request){
+        $this->validate($request, [
+            'email' => ['required', 'email','max:255'],
+            'password'=> ['required', 'min:6', 'max:255'],
+        ]);
+
+        $user = User::where('email', $request->email)->first();
+ 
+        if (! $user || ! Hash::check($request->password, $user->password)) {
+            throw ValidationException::withMessages([
+                'email' => ['The provided credentials are incorrect.'],
+            ]);
+        }
+        return response()->json([
+            'status'=> 'success',
+            'token' => $user->createToken($user->name)->plainTextToken,
+            'user' => $user
+        ]);
     }
 
     public function getRegisterForm() {

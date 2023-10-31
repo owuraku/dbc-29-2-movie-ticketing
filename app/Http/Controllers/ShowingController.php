@@ -25,6 +25,10 @@ class ShowingController extends Controller
                 ->with(['showings' => $showings]);
     }
 
+    public function getAll() {
+        return  Showing::active()->orderBy('showing_datetime', 'asc')->get();
+    }
+
     /**
      * Show the form for creating a new resource.
      */
