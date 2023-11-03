@@ -23,7 +23,7 @@
                 <th scope="row">{{$movie->title}}</th>
                 <td>{{$movie->genre}}</td>
                 <td>
-                  <img height="100px" src="{{$movie->getPosterUrl()}}" alt="">
+                  <img height="100px" src="{{$movie->poster}}" alt="">
                   </td>
                 <td>
                     <a class="btn btn-primary" href="{{route('movies.edit', $movie->id)}}">Edit</a>

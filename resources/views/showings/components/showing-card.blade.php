@@ -1,5 +1,5 @@
 <div class="card col">
-  <img src="{{$showing->movie->getPosterUrl()}}" class="card-img-top @if($showing->isSoldOut()) sold-out @endif" alt="Movie Poster">
+  <img src="{{$showing->movie->poster}}" class="card-img-top @if($showing->isSoldOut()) sold-out @endif" alt="Movie Poster">
 
   <div class="card-body">
     <h5 class="card-title">{{$showing->movie->title}} </h5>

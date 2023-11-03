@@ -41,7 +41,7 @@
       </div>
     {{-- poster/image --}}
     @isset($edit)
-      <img src="{{$movie->getPosterUrl()}}" height="80px" alt="">
+      <img src="{{$movie->poster}}" height="80px" alt="">
     @endisset
     <div class="col-12">
         <label for="poster" class="form-label">Select Movie Poster</label>

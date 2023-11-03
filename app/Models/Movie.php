@@ -26,17 +26,17 @@ class Movie extends Model
         return $this->showings()->where('showing_datetime', '>', now());
     }
 
-    public function getPosterUrl() {
-        if (Str::contains($this->poster, "https")){
-            return $this->poster;
-        } else {
-            return Storage::disk('images')->url($this->poster);
-        }
-    }
+    // public function poster {
+    //     if (Str::contains($this->poster, "https")){
+    //         return $this->poster;
+    //     } else {
+    //         return Storage::disk('images')->url($this->poster);
+    //     }
+    // }
 
     protected function poster(): Attribute {
         return Attribute::make(
-            get: fn ($path, array $attributes) => Str::contains($attributes['poster'], "https") ? $attributes['poster'] : Storage::disk('images')->url($attributes['poster']) ,
+            get: fn ($path, array $attributes) => Str::contains($attributes['poster'], "http") ? $attributes['poster'] : Storage::disk('images')->url($attributes['poster']) ,
         );
     }
 }
